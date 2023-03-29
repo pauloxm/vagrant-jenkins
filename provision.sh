@@ -11,6 +11,20 @@ systemctl daemon-reload
 systemctl start jenkins
 systemctl enable jenkins
 
+## Instalar Sonar Scanner
+yum install -y epel-release unzip
+wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
+unzip sonar-scanner-cli-4.8.0.2856-linux.zip -d /opt
+mv /opt/sonar-scanner-4.8.0.2856-linux /opt/sonar-scanner
+chown -R jenkins:jenkins /opt/sonar-scanner
+echo 'export PATH=$PATH:/opt/sonar-scanner/bin' | sudo tee -a /etc/profile
+
+## Instalar Golang
+
+wget https://go.dev/dl/go1.20.2.linux-amd64.tar.gz
+rm -rf /usr/local/go && tar -C /usr/local -xzf go1.20.2.linux-amd64.tar.gz
+echo 'export PATH=$PATH:/usr/local/go/bin' | sudo tee -a /etc/profile
+
 ## Instalação do Docker / Docker Compose
 yum install -y yum-utils
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
