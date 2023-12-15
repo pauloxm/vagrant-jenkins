@@ -2,11 +2,17 @@
 
 ## Instalação do Jenkins
 
-yum install -y epel-release
+#yum install -y epel-release
+#yum install -y wget git
+sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Linux-*; \
+sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-Linux-*; \
+dnf update -y; \
+dnf --disablerepo '*' --enablerepo extras swap centos-linux-repos centos-stream-repos -y; \
+dnf distro-sync -y;
 yum install -y wget git
 wget --no-check-certificate -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
-sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
-yum install -y java-11-openjdk java-11-openjdk-devel
+rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+yum install -y java-17-openjdk java-17-openjdk-devel
 yum install -y jenkins
 systemctl daemon-reload
 systemctl start jenkins
@@ -15,9 +21,9 @@ systemctl enable jenkins
 ## Instalar Sonar Scanner
 
 yum install -y epel-release unzip
-wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
-unzip sonar-scanner-cli-4.8.0.2856-linux.zip -d /opt
-mv /opt/sonar-scanner-4.8.0.2856-linux /opt/sonar-scanner
+https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+unzip sonar-scanner-cli-5.0.1.3006-linux.zip -d /opt
+mv /opt/sonar-scanner-cli-5.0.1.3006-linux /opt/sonar-scanner
 chown -R jenkins:jenkins /opt/sonar-scanner
 echo 'export PATH=$PATH:/opt/sonar-scanner/bin' | sudo tee -a /etc/profile
 

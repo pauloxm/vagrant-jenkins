@@ -1,6 +1,6 @@
 ## 1. Definindo as características das máquinas virtuais 
 jenkins = {
-  'jenkins' => {'memory' => '1024', 'cpus' => 1, 'ip' => '50', 'box' => 'centos/7'},
+  'jenkins' => {'memory' => '1024', 'cpus' => 1, 'ip' => '50', 'box' => 'centos/8'},
 }
 ## 1. Aplicando as configurações no virtualizador
 Vagrant.configure('2') do |config|
